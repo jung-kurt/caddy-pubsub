@@ -12,3 +12,6 @@
 *.out
 
 .*.swp
+doc/body.html
+doc/index.html
+doc/pubsub.md
