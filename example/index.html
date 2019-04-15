@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="Description" content="Demonstration of Pubsub for Caddy">
+    <meta name= viewport content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+    <link rel="stylesheet" href="app.css" />
+    <title>Caddy PubSub</title>
+  </head>
+
+  <body class="container">
+
+    <h1>Pubsub for Caddy demonstration</h1>
+
+    <noscript>
+
+      <p>Javascript needs to be enabled for this demonstration to function properly</p>
+
+    </noscript>
+
+    <div>
+
+      <form id="run">
+
+        <div class="row">
+          <div class="u-full-width">
+            <label for="mode_cfg">Mode</label>
+            <div id="mode_cfg">
+              <button type="button" data-click="configure">Configure</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="six columns">
+            <label for="pub_action">Publish</label>
+            <div class="u-full-width" id="pub_action">
+              <button type="button" data-click="pub-a">A</button>
+              <button type="button" data-click="pub-b">B</button>
+              <button type="button" data-click="pub-c">C</button>
+            </div>
+          </div>
+          <div class="six columns">
+            <label for="sub_action">Subscribe</label>
+            <div id="sub_action">
+              <button type="button" id="btn_start" data-click="sub-start">Start</button>
+              <button type="button" id="btn_stop" data-click="sub-stop">Stop</button>
+              <span class="lf" id="status"></span>
+            </div>
+          </div>
+        </div>
+
+      </form>
+
+      <form id="configure" style="display: none;">
+
+        <div class="row">
+          <div class="u-full-width columns">
+            <label for="mode_run">Mode</label>
+            <div id="mode_run">
+              <button type="button" data-click="run">Run</button>
+            </div>
+          </div>
+        </div>
+
+        <h2>Publish events</h2>
+
+        <div class="row">
+          <div class="four columns">
+            <label for="nm">Publisher name</label>
+            <input class="u-full-width" type="text" id="nm" placeholder="Publisher name">
+          </div>
+          <div class="four columns">
+            <label for="pub_category">Category</label>
+            <input class="u-full-width" type="text" id="pub_category" placeholder="Category" value="demo"> 
+          </div>
+          <div class="four columns">
+            <label for="pub_url">URL</label>
+            <input class="u-full-width" type="text" id="pub_url" placeholder="URL" value="/demo/publish"> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="six columns">
+            <label for="pub_user">Auth name</label>
+            <input class="u-full-width" type="text" id="pub_user" placeholder="Name" value="publish"> 
+          </div>
+          <div class="six columns">
+            <label for="pub_pw">Auth password</label>
+            <input class="u-full-width" type="password" id="pub_pw" placeholder="Password" value="123"> 
+          </div>
+        </div>
+
+        <h2>Subscribe to events</h2>
+
+        <div class="row">
+          <div class="six columns">
+            <label for="sub_category">Category</label>
+            <input class="u-full-width" type="text" id="sub_category" placeholder="Category" value="demo"> 
+          </div>
+          <div class="six columns">
+            <label for="sub_url">URL</label>
+            <input class="u-full-width" type="text" id="sub_url" placeholder="URL" value="/demo/subscribe"> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="six columns">
+            <label for="sub_user">Auth name</label>
+            <input class="u-full-width" type="text" id="sub_user" placeholder="Name" value="subscribe"> 
+          </div>
+          <div class="six columns">
+            <label for="sub_pw">Auth password</label>
+            <input class="u-full-width" type="password" id="sub_pw" placeholder="Password" value="123"> 
+          </div>
+        </div>
+
+      </form>
+
+    </div>
+
+    <ul id="list"></ul>
+
+    <script src="ps.js"></script>
+    <script src="util.js"></script>
+    <script src="app.js"></script>
+
+  </body>
+
+</html>

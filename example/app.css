@@ -1,0 +1,27 @@
+.container {
+  padding-top: 1.5em;
+}
+h1 {
+  font-size: 1.8em;
+}
+h2 {
+  font-size: 1.4em;
+}
+.rt {
+  text-align: right;
+}
+label.inline {
+  display: inline-block;
+}
+#list span {
+  padding-right: 2em;
+}
+#status {
+  margin-left: 1em;
+}
+button:disabled {
+  cursor: not-allowed;
+  background: #eee;
+  border: 1px solid #ddd;
+  color: #777;
+}
