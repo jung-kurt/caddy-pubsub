@@ -27,6 +27,7 @@ README.md doc.go doc/index.html : doc/doc.txt
 
 doc/pubsub.md README.md doc.go : doc/doc.txt
 	cd doc; lua doc.lua
+	gofmt -s -w doc.go
 
 doc/index.html : doc/hdr.html doc/body.html doc/ftr.html
 	cat doc/hdr.html doc/body.html doc/ftr.html > $@

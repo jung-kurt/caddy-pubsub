@@ -1,5 +1,5 @@
 /*
-Package pubsub implements a longpoll-based publish and subscribe middleware for 
+Package pubsub implements a longpoll-based publish and subscribe middleware for
 Caddy, a modern, full-featured, easy-to-use web server.
 
 This plugin lets you easily push event notifications to any practical number of
@@ -74,12 +74,12 @@ specified category. Structured data is easily dispatched by sending a
 JSON-encoded value. The included JavaScript file ps.js has functions that
 handle this encoding and decoding automatically.
 
-At its simplest, a publish call might look like 
+At its simplest, a publish call might look like
 
 	https://example.com/chat/publish?category=team&body=Hello%20world
 
 In this example, the body "Hello world" is dispatched to all subscribers of the
-"team" category. 
+"team" category.
 
 Subscribing
 
