@@ -38,8 +38,8 @@ server and all connected clients.
 
 Longpolling consumes resources on the server. Too many connections to
 clients can impact server operations. It is important to protect the
-configured "subscribe" path with some form of authentication such as [basic
-authentication]auth] (be sure to use HTTPS!) or [JWT in order to
+configured "subscribe" path with some form of authentication such as
+basic authentication (be sure to use HTTPS!) or JWT in order to
 manage the number of connections that your system will maintain.
 
 Published events can instantly reach a large number of clients. Be sure
