@@ -6,11 +6,8 @@
   var sub, pub, subscribe, status, append, ids, mode;
 
   subscribe = null;
-
   ids = util.domElements('id');
-
   append = util.append(ids.list, 'li', 10);
-
   mode = "run";
 
   pub = function(str) {
@@ -21,40 +18,24 @@
     ps.publish(ids.pub_category.value, ids.pub_url.value, body, authStr);
   };
 
-  status = function(active) {
-    if (active) {
-      ids.status.textContent = "Active";
-      ids.btn_stop.removeAttribute('disabled');
-      ids.btn_start.setAttribute('disabled', 'disabled');
-    } else {
-      ids.status.textContent = "Inactive";
-      ids.btn_start.removeAttribute('disabled');
-      ids.btn_stop.setAttribute('disabled', 'disabled');
-    }
-  };
-
-  status(false);
-
-  sub = function(activate) {
+  sub = function() {
     var authStr, subFnc;
 
     subFnc = function(data, time) {
       append(data);
     };
 
-    if (activate) {
-      if (subscribe) subscribe.stop();
+    if (subscribe) {
+      subscribe.stop();
+      subscribe = null;
+      ids.sub_action.textContent = "Start";
+    } else {
       authStr = util.basicAuthStr(ids.sub_user.value, ids.sub_pw.value);
       subscribe = ps.Subscriber(ids.sub_category.value, ids.sub_url.value, subFnc, authStr);
       subscribe.start();
-      status(true);
-    } else {
-      if (subscribe) {
-        subscribe.stop();
-        subscribe = null;
-      }
-      status(false);
+      ids.sub_action.textContent = "Stop";
     }
+
   };
 
   util.click(function(val) {
@@ -68,11 +49,8 @@
       case "pub-c":
         pub("C");
         break;
-      case "sub-start":
-        sub(true);
-        break;
-      case "sub-stop":
-        sub(false);
+      case "sub-action":
+        sub();
         break;
       case "mode":
         if (mode === "run") {
