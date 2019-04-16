@@ -132,16 +132,10 @@ accessed from a number of devices on your network. (A local interface, such as
 127.0.0.5, will work, but then you will have to simulate multiple devices by
 opening multiple tabs in your browser.) You may wish to use a non-standard port
 if you need to avoid interfering with another server. HTTP is used here for the
-purposes of a local, insecure demonstration, but you should use HTTPS in
-production. An example Caddyfile might look like the following. The values for
-the authorization fields and paths are used as defaults in the example script,
-so leaving them as they are will simplify the demonstration.
-
-		http://192.168.0.10:8000 {
-			basicauth /demo/publish publish 123
-			basicauth /demo/subscribe subscribe 123
-			pubsub /demo/publish /demo/subscribe
-		}
+purposes of a local, insecure demonstration. Use HTTPS in production. The
+Caddyfile has values for the authorization fields and paths that are used as
+defaults in the example script, so leaving them as they are will simplify the
+demonstration.
 
 • Launch the Caddy web server from the directory that contains your example
 Caddyfile. The command might be simply caddy or, if the caddy executable you
@@ -153,17 +147,17 @@ Alternatively, open a number of tabs in a single browser and point them to the
 server.
 
 • On each open page, click the "Configure" button and make appropriate changes.
-All fields, such as "Auth password" and "URL", except "Publisher name" are
-pre-filled to match the values in the sample Caddyfile shown above. You may
-enter a name in the "Publisher name" field or leave it empty. A blank value
-will be replaced with a random name like "user_42" the first time you publish
-an event.
+Most fields, such as "Auth password" and "URL" are pre-filled to match the
+values in the sample Caddyfile shown above. You may enter a name in the
+"Publisher name" field or leave it empty. A blank value will be replaced with a
+random name like "user_42" the first time you publish an event.
 
 • On each open page, click the "Run" button and then the "Start" button.
 Simulate the publication of events by clicking the "A", "B", and "C" buttons
 from various devices or tab pages. These events will be sent to the web server
 and dispatched to all subscribing pages. These events will be displayed beneath
-the buttons in a list.
+the buttons in a list. A page can publish events even if it does not subscribe
+to them.
 
 Using pubsub in your own web applications
 
