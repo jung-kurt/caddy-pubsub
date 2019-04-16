@@ -1,7 +1,7 @@
 CADDYDIR=/home/kurt/go/src/github.com/mholt/caddy/caddy
 CADDY=${CADDYDIR}/caddy
 
-all : ${CADDY}  example/ps.js.ok example/app.js.ok example/util.js.ok example/index.html.ok
+all : ${CADDY} doc example/ps.js.ok example/app.js.ok example/util.js.ok example/index.html.ok
 
 ${CADDY} : pubsub.go
 	./build

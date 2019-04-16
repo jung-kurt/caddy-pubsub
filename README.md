@@ -150,9 +150,9 @@ server.
 
 * On each open page, click the "Configure" button and make appropriate changes.
 Most fields, such as "Auth password" and "URL" are pre-filled to match the
-values in the sample Caddyfile shown above. You may enter a name in the
-"Publisher name" field or leave it empty. A blank value will be replaced with a
-random name like "user_42" the first time you publish an event.
+values in the sample Caddyfile. You may enter a name in the "Publisher name"
+field or leave it empty. A blank value will be replaced with a random name like
+"user_42" the first time you publish an event.
 
 * On each open page, click the "Run" button and then the "Start" button.
 Simulate the publication of events by clicking the "A", "B", and "C" buttons
