@@ -3,16 +3,20 @@
 
 var util = util || {};
 
-// Return object that associates, for each DOM element that has the attribute
-// attr, the value of the attribute and the element itself.
-util.domElements = function(attr) {
-  var obj, el, j, list;
+// Return object that associates, for each DOM element that has at least one of
+// the attributes passed as an argument, the value of the attribute and the
+// element itself. For example, els = util.DomElements('id', 'data-click').
+util.domElements = function() {
+  var attr, obj, el, j, k, list;
 
   obj = {};
-  list = document.querySelectorAll('[' + attr + ']');
-  for (j = 0; j < list.length; j++) {
-    el = list[j];
-    obj[el.getAttribute(attr)] = el;
+  for (j = 0; j < arguments.length; j++) {
+    attr = arguments[j];
+    list = document.querySelectorAll('[' + attr + ']');
+    for (k = 0; k < list.length; k++) {
+      el = list[k];
+      obj[el.getAttribute(attr)] = el;
+    }
   }
   return obj;
 };

@@ -3,19 +3,19 @@
 
 (function() {
 
-  var sub, pub, subscribe, status, append, ids, mode;
+  var sub, pub, subscribe, status, append, els, mode;
 
   subscribe = null;
-  ids = util.domElements('id');
-  append = util.append(ids.list, 'li', 10);
+  els = util.domElements('id', 'data-click');
+  append = util.append(els.list, 'li', 10);
   mode = "run";
 
   pub = function(str) {
     var body, authStr;
-    if (ids.nm.value === '') ids.nm.value = 'user_' + util.randomInt(10, 100);
-    body = 'Event ' + str + ' from publisher ' + ids.nm.value;
-    authStr = util.basicAuthStr(ids.pub_user.value, ids.pub_pw.value);
-    ps.publish(ids.pub_category.value, ids.pub_url.value, body, authStr);
+    if (els.nm.value === '') els.nm.value = 'user_' + util.randomInt(10, 100);
+    body = 'Event ' + str + ' from publisher ' + els.nm.value;
+    authStr = util.basicAuthStr(els.pub_user.value, els.pub_pw.value);
+    ps.publish(els.pub_category.value, els.pub_url.value, body, authStr);
   };
 
   sub = function() {
@@ -28,12 +28,12 @@
     if (subscribe) {
       subscribe.stop();
       subscribe = null;
-      ids.sub_action.textContent = "Start";
+      els.sub_action.textContent = "Start";
     } else {
-      authStr = util.basicAuthStr(ids.sub_user.value, ids.sub_pw.value);
-      subscribe = ps.Subscriber(ids.sub_category.value, ids.sub_url.value, subFnc, authStr);
+      authStr = util.basicAuthStr(els.sub_user.value, els.sub_pw.value);
+      subscribe = ps.Subscriber(els.sub_category.value, els.sub_url.value, subFnc, authStr);
       subscribe.start();
-      ids.sub_action.textContent = "Stop";
+      els.sub_action.textContent = "Stop";
     }
 
   };
@@ -49,17 +49,17 @@
       case "pub-c":
         pub("C");
         break;
-      case "sub-action":
+      case "sub_action":
         sub();
         break;
       case "mode":
         if (mode === "run") {
-          util.bankShow(ids.configure);
-          ids.mode.textContent = "Run";
+          util.bankShow(els.configure);
+          els.mode.textContent = "Run";
           mode = "configure";
         } else {
-          util.bankShow(ids.run);
-          ids.mode.textContent = "Configure";
+          util.bankShow(els.run);
+          els.mode.textContent = "Configure";
           mode = "run";
         }
         break;
