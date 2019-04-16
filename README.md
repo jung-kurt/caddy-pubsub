@@ -155,16 +155,17 @@ Alternatively, open a number of tabs in a single browser and point them to the
 server.
 
 * On each open page, click the "Configure" button and make appropriate changes.
-The various fields like "Auth name", "Auth password", and "URL" are pre-filled
-to match the values in the sample Caddyfile shown above. You may enter a name
-in the "Publisher name" field. If you leave it blank, it will receive a random
-name like "user_42" the first time you publish an event.
+All fields, such as "Auth password" and "URL", except "Publisher name" are
+pre-filled to match the values in the sample Caddyfile shown above. You may
+enter a name in the "Publisher name" field or leave it empty. A blank value
+will be replaced with a random name like "user_42" the first time you publish
+an event.
 
 * On each open page, click the "Run" button and then the "Start" button.
 Simulate the publication of events by clicking the "A", "B", and "C" buttons
-from various devices or tab pages. These events will sent to the web server and
-dispatched to all subscribing pages. These events will be displayed beneath the
-buttons in a list.
+from various devices or tab pages. These events will be sent to the web server
+and dispatched to all subscribing pages. These events will be displayed beneath
+the buttons in a list.
 
 ## Using pubsub in your own web applications
 
