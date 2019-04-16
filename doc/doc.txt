@@ -50,9 +50,9 @@ server and all connected clients.
 ~rgc~
 > **Longpolling consumes resources on the server.** Too many connections to
 > clients can impact server operations. It is important to protect the
-> configured "subscribe" path with some form of authentication such as 
-> [basic authentication][auth] (be sure to use HTTPS!) or [JWT][jwt] in order to
-> manage the number of connections that your system will maintain.
+> configured "subscribe" path with some form of authentication such as [basic
+> authentication][auth] or [JWT][jwt] in order to manage the number of
+> connections that your system will maintain. Be sure to use HTTPS!
 
 ~c~
 > %warning%
@@ -162,10 +162,11 @@ appropriate local network address. Ideally, you will use an address that can be
 accessed from a number of devices on your network. (A local interface, such as
 127.0.0.5, will work, but then you will have to simulate multiple devices by
 opening multiple tabs in your browser.) You may wish to use a non-standard port
-if you need to avoid interfering with another server. An example Caddyfile
-might look like the following. The values for the authorization fields and
-paths are used as defaults in the example script, so leaving them as they are
-will simplify the demonstration.
+if you need to avoid interfering with another server. HTTP is used here for the
+purposes of a local, insecure demonstration, but you should use HTTPS in
+production. An example Caddyfile might look like the following. The values for
+the authorization fields and paths are used as defaults in the example script,
+so leaving them as they are will simplify the demonstration.
 
 		http://192.168.0.10:8000 {
 			basicauth /demo/publish publish 123
@@ -229,6 +230,24 @@ To start the subscription, call
 To end the subscription, call
 
 	subscribe.stop();
+
+Publish an event as follows:
+
+  ps.publish(category, url, body, authorization);
+
+The parameters are:
+
+* **category**: a short string that identifies the event category of the
+published event
+
+* **url**: the publish_path configured in the Caddyfile (in the example above,
+this is "/demo/publish")
+
+* **body**: this is the text that will be dispatched to all subscribers of
+events with the specified category; this text is often a JSON-encoded object
+
+* **authorization**: a string like "Basic QWxhZGRpbjpPcGVuU2VzYW1l" that will be
+sent as an authorization header.
 
 ~cr~
 [auth]: https://caddyserver.com/docs/basicauth
