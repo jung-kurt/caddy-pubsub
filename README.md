@@ -40,8 +40,8 @@ server and all connected clients.
 
 **Longpolling consumes resources on the server.** Too many connections to
 clients can impact server operations. It is important to protect the
-configured "subscribe" path with some form of authentication such as [basic
-authentication][auth] or [JWT][jwt] in order to manage the number of
+configured "subscribe" path with some form of authentication such as 
+[basic authentication][auth] or [JWT][jwt] in order to manage the number of
 connections that your system will maintain. Be sure to use HTTPS!
 
 **Published events can instantly reach a large number of clients.** Be sure
@@ -73,8 +73,7 @@ request rather than included in the tail of the URL in a GET request, the
 Content-Type must be "application/x-www-form-urlencoded". The body value is
 then dispatched verbatim to all clients that are currently subscribed to the
 specified category. Structured data is easily dispatched by sending a
-JSON-encoded value. The included JavaScript file ps.js has functions that
-handle this encoding and decoding automatically.
+JSON-encoded value.
 
 At its simplest, a publish call might look like 
 
@@ -205,7 +204,7 @@ To end the subscription, call
 
 Publish an event as follows:
 
-  ps.publish(category, url, body, authorization);
+	ps.publish(category, url, body, authorization);
 
 The parameters are:
 
