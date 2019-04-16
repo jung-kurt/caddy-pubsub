@@ -233,7 +233,7 @@ To end the subscription, call
 
 Publish an event as follows:
 
-  ps.publish(category, url, body, authorization);
+	ps.publish(category, url, body, authorization);
 
 The parameters are:
 
