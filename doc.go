@@ -125,18 +125,17 @@ Running the example
 • Obtain or build a Caddy web server with the pubsub plugin.
 
 • Create an example directory and download the files in the repository
-  example directory to it. Make this your default working
-  directory.
+example directory to it. Make this your default working directory.
 
 • Edit the file named Caddyfile. Modify the site address to an
-  appropriate local network address. Ideally, you will use an address that can
-  be accessed from a number of devices on your network. (A local interface,
-  such as 127.0.0.5, will work, but then you will have to simulate multiple
-  devices by opening multiple tabs in your browser.) You may wish to use a
-  non-standard port if you need to avoid interfering with another server. An
-  example Caddyfile might look like the following. The values for the
-  authorization fields and paths are used as defaults in the example script, so
-  leaving them as they are will simplify the demonstration.
+appropriate local network address. Ideally, you will use an address that can be
+accessed from a number of devices on your network. (A local interface, such as
+127.0.0.5, will work, but then you will have to simulate multiple devices by
+opening multiple tabs in your browser.) You may wish to use a non-standard port
+if you need to avoid interfering with another server. An example Caddyfile
+might look like the following. The values for the authorization fields and
+paths are used as defaults in the example script, so leaving them as they are
+will simplify the demonstration.
 
 		http://192.168.0.10:8000 {
 			basicauth /demo/publish publish 123
@@ -145,25 +144,25 @@ Running the example
 		}
 
 • Launch the Caddy web server from the directory that contains your example
-  Caddyfile. The command might be simply caddy or, if the caddy executable
-  you wish to run is not on the default search path, you will need to qualify
-  the name with its location.
+Caddyfile. The command might be simply caddy or, if the caddy executable you
+wish to run is not on the default search path, you will need to qualify the
+name with its location.
 
 • Access the server with the web browsers of a number of devices.
-  Alternatively, open a number of tabs in a single browser and point them to
-  the server.
+Alternatively, open a number of tabs in a single browser and point them to the
+server.
 
 • On each open page, click the "Configure" button and make appropriate changes.
-  The various fields like "Auth name", "Auth password", and "URL" are
-  pre-filled to match the values in the sample Caddyfile shown above. You may
-  enter a name in the "Publisher name" field. If you leave it blank, it will
-  receive a random name like "user_42" the first time you publish an event.
+The various fields like "Auth name", "Auth password", and "URL" are pre-filled
+to match the values in the sample Caddyfile shown above. You may enter a name
+in the "Publisher name" field. If you leave it blank, it will receive a random
+name like "user_42" the first time you publish an event.
 
 • On each open page, click the "Run" button and then the "Start" button.
-  Simulate the publication of events by clicking the "A", "B", and "C" buttons
-  from various devices or tab pages. These events will sent to the web server
-  and dispatched to all subscribing pages. These events will be displayed
-  beneath the buttons in a list.
+Simulate the publication of events by clicking the "A", "B", and "C" buttons
+from various devices or tab pages. These events will sent to the web server and
+dispatched to all subscribing pages. These events will be displayed beneath the
+buttons in a list.
 
 Using pubsub in your own web applications
 
@@ -180,16 +179,16 @@ Within your application code, instantiate a Subscriber instance as follows:
 The parameters are:
 
 • category: a short string that identifies the event category to which to
-  subscribe
+subscribe
 
 • url: the subscribe_path configured in the Caddyfile (in the example above,
-  this is "/demo/subscribe")
+this is "/demo/subscribe")
 
 • callback: this is a function that is called (with the published body and
-  server timestamp) for each event of the specified category
+server timestamp) for each event of the specified category
 
 • authorization: a string like "Basic QWxhZGRpbjpPcGVuU2VzYW1l" that will be
-  sent as an authorization header.
+sent as an authorization header.
 
 More details can be found in the comments in the ps.js file.
 
