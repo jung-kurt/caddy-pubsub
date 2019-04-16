@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="Description" content="Demonstration of Pubsub for Caddy">
     <meta name= viewport content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Kurt Jung">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
     <link rel="stylesheet" href="app.css" />
@@ -22,18 +23,15 @@
 
     </noscript>
 
+    <div class="row">
+      <div class="u-full-width">
+        <button id="mode" type="button" data-click="mode">Configure</button>
+      </div>
+    </div>
+
     <div>
 
       <form id="run">
-
-        <div class="row">
-          <div class="u-full-width">
-            <label for="mode_cfg">Mode</label>
-            <div id="mode_cfg">
-              <button type="button" data-click="configure">Configure</button>
-            </div>
-          </div>
-        </div>
 
         <div class="row">
           <div class="six columns">
@@ -57,15 +55,6 @@
       </form>
 
       <form id="configure" style="display: none;">
-
-        <div class="row">
-          <div class="u-full-width columns">
-            <label for="mode_run">Mode</label>
-            <div id="mode_run">
-              <button type="button" data-click="run">Run</button>
-            </div>
-          </div>
-        </div>
 
         <h2>Publish events</h2>
 

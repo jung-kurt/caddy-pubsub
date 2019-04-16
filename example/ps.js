@@ -1,3 +1,6 @@
+// Released under MIT license.
+// https://raw.githubusercontent.com/jung-kurt/caddy-pubsub/master/LICENSE
+
 var ps = ps || {};
 
 (function() {

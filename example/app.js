@@ -1,12 +1,17 @@
+// Released under MIT license.
+// https://raw.githubusercontent.com/jung-kurt/caddy-pubsub/master/LICENSE
+
 (function() {
 
-  var sub, pub, subscribe, status, append, ids;
+  var sub, pub, subscribe, status, append, ids, mode;
 
   subscribe = null;
 
   ids = util.domElements('id');
 
   append = util.append(ids.list, 'li', 10);
+
+  mode = "run";
 
   pub = function(str) {
     var body, authStr;
@@ -69,11 +74,16 @@
       case "sub-stop":
         sub(false);
         break;
-      case "configure":
-        util.bankShow(ids.configure);
-        break;
-      case "run":
-        util.bankShow(ids.run);
+      case "mode":
+        if (mode === "run") {
+          util.bankShow(ids.configure);
+          ids.mode.textContent = "Run";
+          mode = "configure";
+        } else {
+          util.bankShow(ids.run);
+          ids.mode.textContent = "Configure";
+          mode = "run";
+        }
         break;
     }
   });
