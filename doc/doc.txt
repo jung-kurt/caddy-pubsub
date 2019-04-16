@@ -32,7 +32,7 @@ connections
 Additionally, this plugin provides a simple web-based interface to publish
 events, so any software capable of posting content to the Caddy server, such as
 wget and web browsers, can dispatch information to listening clients. This
-flexibility allows short-lived applications, suchs as crontab scripts and CGI
+flexibility allows short-lived applications, such as crontab scripts and CGI
 scripts, to publish events that are of interest to subscribing web clients.
 
 On the downside, longpoll connections are one-direction only. Published events
@@ -78,7 +78,7 @@ scoped by directive.
 
 For example:
 
-	cgi /chat/publish /chat/subscribe
+	pubsub /chat/publish /chat/subscribe
 
 The specified paths are virtual; they do not refer to any filesystem resources.
 
@@ -150,6 +150,84 @@ retained by the longpoll server.
 If the `DeleteEventAfterFirstRetrieval` subdirective is present then events
 will be deleted right after they have been dispatched to current subscribers.
 
+## Running the example
+
+* Obtain or build a Caddy web server with the pubsub plugin.
+
+* Create an example directory and download the files in the repository
+  [example][example] directory to it. Make this your default working
+  directory.
+
+* Edit the file named Caddyfile. Modify the site address to an
+  appropriate local network address. Ideally, you will use an address that can
+  be accessed from a number of devices on your network. (A local interface,
+  such as 127.0.0.5, will work, but then you will have to simulate multiple
+  devices by opening multiple tabs in your browser.) You may wish to use a
+  non-standard port if you need to avoid interfering with another server. An
+  example Caddyfile might look like the following. The values for the
+  authorization fields and paths are used as defaults in the example script, so
+  leaving them as they are will simplify the demonstration.
+
+		http://192.168.0.10:8000 {
+			basicauth /demo/publish publish 123
+			basicauth /demo/subscribe subscribe 123
+			pubsub /demo/publish /demo/subscribe
+		}
+
+* Launch the Caddy web server from the directory that contains your example
+  Caddyfile. The command might be simply `caddy` or, if the caddy executable
+  you wish to run is not on the default search path, you will need to qualify
+  the name with its location.
+
+* Access the server with the web browsers of a number of devices.
+  Alternatively, open a number of tabs in a single browser and point them to
+  the server.
+
+* On each open page, click the "Configure" button and make appropriate changes.
+  The various fields like "Auth name", "Auth password", and "URL" are
+  pre-filled to match the values in the sample Caddyfile shown above. You may
+  enter a name in the "Publisher name" field. If you leave it blank, it will
+  receive a random name like "user_42" the first time you publish an event.
+
+* On each open page, click the "Run" button and then the "Start" button.
+  Simulate the publication of events by clicking the "A", "B", and "C" buttons
+  from various devices or tab pages. These events will sent to the web server
+  and dispatched to all subscribing pages. These events will be displayed at
+  beneath the buttons in a list.
+
+## Using pubsub in you own web applications
+
+The JavaScript file ps.js is included in the example shown above. This script
+may be included in a web page with the following line:
+
+	<script src="ps.js"></script>
+
+The script is small and dependency-free and should be easy to modify if needed.
+Within your application code, instantiate a Subscriber instance as follows:
+
+	subscribe = ps.Subscriber(category, url, callback, authorization);
+
+The parameters are:
+
+* **category**: a short string that identifies the event category to which to
+  subscribe
+* **url**: the subscribe_path configured in the Caddyfile (in the example above,
+  this is "/demo/subscribe")
+* **callback**: this is a function that is called (with the published body and
+  server timestamp) for each event of the specified category
+* **authorization**: a string like "Basic QWxhZGRpbjpPcGVuU2VzYW1l" that will be
+  sent as an authorization header.
+
+More details can be found in the comments in the ps.js file.
+
+To start the subscription, call
+
+	subscribe.start();
+
+To end the subscription, call
+
+	subscribe.stop();
+
 ~cr~
 [auth]: https://caddyserver.com/docs/basicauth
 [badge-author]: https://img.shields.io/badge/author-Kurt_Jung-blue.svg
@@ -157,6 +235,7 @@ will be deleted right after they have been dispatched to current subscribers.
 [badge-mit]: https://img.shields.io/badge/license-MIT-blue.svg
 [badge-report]: https://goreportcard.com/badge/github.com/jung-kurt/caddy-pubsub
 [caddy]: https://caddyserver.com/
+[example]: https://github.com/jung-kurt/caddy-pubsub/tree/master/example
 [github]: https://github.com/jung-kurt/caddy-pubsub
 [golongpoll-doc]: https://godoc.org/github.com/jcuga/golongpoll
 [jung]: https://github.com/jung-kurt/
