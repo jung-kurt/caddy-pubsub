@@ -192,10 +192,10 @@ will be deleted right after they have been dispatched to current subscribers.
 * On each open page, click the "Run" button and then the "Start" button.
   Simulate the publication of events by clicking the "A", "B", and "C" buttons
   from various devices or tab pages. These events will sent to the web server
-  and dispatched to all subscribing pages. These events will be displayed at
+  and dispatched to all subscribing pages. These events will be displayed
   beneath the buttons in a list.
 
-## Using pubsub in you own web applications
+## Using pubsub in your own web applications
 
 The JavaScript file ps.js is included in the example shown above. This script
 may be included in a web page with the following line:
