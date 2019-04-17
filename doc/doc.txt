@@ -199,7 +199,7 @@ may be included in a web page with the following line:
 The script is small and dependency-free and should be easy to modify if needed.
 Within your application code, instantiate a Subscriber instance as follows:
 
-	subscribe = ps.Subscriber(category, url, callback, authorization);
+	subscribe = ps.Subscriber(category, url, callback, authorization, options);
 
 The parameters are:
 
@@ -214,6 +214,13 @@ server timestamp) for each event of the specified category
 
 * **authorization**: a string like "Basic c3Vic2NyaWJlOjEyMw==" that will be
 sent as an authorization header.
+
+* **options**: an object that contains the fields 
+**timeout** (seconds),
+**successDelay** (milliseconds), 
+**errorDelay** (milliseconds), and 
+**json** (boolean, true if event bodies are JSON-encoded and 
+should be automatically decoded).
 
 More details can be found in the comments in the ps.js file.
 

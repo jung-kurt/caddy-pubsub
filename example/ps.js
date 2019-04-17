@@ -5,7 +5,7 @@ var ps = ps || {};
 
 (function() {
 
-  var ajax, mergeInto;
+  var ajax, jsonDecode, mergeInto;
 
   // Copy (shallow) properties and values from objB into objA and return objA.
   mergeInto = function(objA, objB)  {
@@ -20,6 +20,14 @@ var ps = ps || {};
     return objA;
   };
 
+  // Parse the specified JSON record. If an error occurs, null is returned.
+  jsonDecode = function(str) {
+    try {
+      return JSON.parse(str);
+    } catch (error) {
+      return null;
+    }
+  };
 
   // Return an AJAX request object. The specified optional success and error
   // callback are registered but the calls to 'open', 'send' and other methods
@@ -62,6 +70,8 @@ var ps = ps || {};
   //   successfully received, default 3
   // * 'errorDelay': number of milliseconds to delay after an error occurs,
   //   default 3000
+  // * 'json': boolean indicating whether event bodies are JSON-encoded and
+  //   should be decoded automatically, default false
   //
   // The return object has the methods start(), isActive(), and stop().
   //
@@ -73,17 +83,19 @@ var ps = ps || {};
       return new ps.Subscriber(category, url, fnc, authStr, options);
     }
 
-    var cycle, active, timeoutId, opt, sinceTime, success, err, pollUrl, poll;
+    var cycle, decode, active, timeoutId, opt, sinceTime, success, err, pollUrl, poll;
 
     opt = mergeInto({
       'timeout': 45,  // in seconds
       'successDelay': 10,  // milliseconds
-      'errorDelay': 3000  // milliseconds
+      'errorDelay': 3000,  // milliseconds
+      'json': false // do not automatically decode event bodies as JSON
     }, options);
 
     active = false;
     pollUrl = url + '?timeout=' + opt.timeout + '&category=' + category + '&since_time=';
     timeoutId = null;
+    decode = opt.json;
 
     cycle = function(ok) {
       if (active) {
@@ -98,15 +110,17 @@ var ps = ps || {};
 
       ok = false;
       if (data) {
-        console.log('ajax', data);
-        data = util.jsonToObj(data);
+        data = jsonDecode(data);
         if (data) {
-        console.log('ajax', data);
           if (data.events && data.events.length > 0) {
             data.events.forEach(function(evt) {
+              var body;
               sinceTime = evt.timestamp;
               if (active) {
-                console.log('ajax call app');
+                if (decode) {
+                  body = jsonDecode(evt.data);
+                  if (body !== null) evt.data = body;
+                }
                 fnc(evt.data, sinceTime);
               }
             });

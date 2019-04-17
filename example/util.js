@@ -81,12 +81,3 @@ util.append = function(parentElement, childTag, count) {
   };
   return append;
 };
-
-// Parse the specified JSON record. If an error occurs, null is returned.
-util.jsonToObj = function(str) {
-  try {
-    return JSON.parse(str);
-  } catch (error) {
-    return null;
-  }
-};
