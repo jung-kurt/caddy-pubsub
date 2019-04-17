@@ -94,14 +94,21 @@ var ps = ps || {};
     success = function(data) {
       var ok;
 
+      console.log('ajax success');
+
       ok = false;
       if (data) {
+        console.log('ajax', data);
         data = util.jsonToObj(data);
         if (data) {
+        console.log('ajax', data);
           if (data.events && data.events.length > 0) {
             data.events.forEach(function(evt) {
               sinceTime = evt.timestamp;
-              if (active) fnc(evt.data, sinceTime);
+              if (active) {
+                console.log('ajax call app');
+                fnc(evt.data, sinceTime);
+              }
             });
             ok = true;
           }
@@ -111,6 +118,7 @@ var ps = ps || {};
     };
 
     err = function(code) {
+      console.log('ajax error', code);
       cycle(false);
     };
 

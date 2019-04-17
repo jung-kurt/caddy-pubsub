@@ -38,5 +38,8 @@ doc/index.html : doc/hdr.html doc/body.html doc/ftr.html
 doc/body.html : doc/pubsub.md
 	markdown -f +links,+image,+smarty,+ext,+divquote -o $@ $<
 
+perm :
+	chgrp -R caddy example
+
 clean :
 	rm -f coverage.html coverage example/*.ok doc/pubsub.md README.md doc.go doc/index.html doc/body.html

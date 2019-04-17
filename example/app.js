@@ -29,11 +29,13 @@
       subscribe.stop();
       subscribe = null;
       els.sub_action.textContent = "Start";
+      els.status.textContent = "Inactive";
     } else {
       authStr = util.basicAuthStr(els.sub_user.value, els.sub_pw.value);
       subscribe = ps.Subscriber(els.sub_category.value, els.sub_url.value, subFnc, authStr);
       subscribe.start();
       els.sub_action.textContent = "Stop";
+      els.status.textContent = "Active";
     }
 
   };

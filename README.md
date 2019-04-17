@@ -179,12 +179,12 @@ The parameters are:
 subscribe
 
 * **url**: the subscribe_path configured in the Caddyfile (in the example above,
-this is "/demo/subscribe")
+this is "/psdemo/subscribe")
 
 * **callback**: this is a function that is called (with the published body and
 server timestamp) for each event of the specified category
 
-* **authorization**: a string like "Basic QWxhZGRpbjpPcGVuU2VzYW1l" that will be
+* **authorization**: a string like "Basic c3Vic2NyaWJlOjEyMw==" that will be
 sent as an authorization header.
 
 More details can be found in the comments in the ps.js file.
@@ -207,13 +207,13 @@ The parameters are:
 published event
 
 * **url**: the publish_path configured in the Caddyfile (in the example above,
-this is "/demo/publish")
+this is "/psdemo/publish")
 
 * **body**: this is the text that will be dispatched to all subscribers of
 events with the specified category; this text is often a JSON-encoded object
 
-* **authorization**: a string like "Basic QWxhZGRpbjpPcGVuU2VzYW1l" that will be
-sent as an authorization header.
+* **authorization**: a string like "Basic cHVibGlzaDoxMjM=" that will be sent
+as an authorization header.
 
 [auth]: https://caddyserver.com/docs/basicauth
 [badge-author]: https://img.shields.io/badge/author-Kurt_Jung-blue.svg
