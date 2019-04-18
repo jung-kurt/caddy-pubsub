@@ -121,6 +121,15 @@ will be deleted right after they have been dispatched to current subscribers.
 
 Running the example
 
+Here is a sample Caddyfile that can be modified for use in the following example:
+
+	http://192.168.1.20 {
+		bind 192.168.1.20
+		basicauth /psdemo/publish publish 123
+		basicauth /psdemo/subscribe subscribe 123
+		pubsub /psdemo/publish /psdemo/subscribe
+	}
+
 • Obtain or build a Caddy web server with the pubsub plugin.
 
 • Create an example directory and download the files in the repository
