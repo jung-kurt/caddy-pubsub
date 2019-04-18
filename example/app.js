@@ -13,16 +13,18 @@
   pub = function(str) {
     var body, authStr;
     if (els.nm.value === '') els.nm.value = 'user_' + util.randomInt(10, 100);
-    body = 'Event ' + str + ' from publisher ' + els.nm.value;
+    body = { 'event': str, 'publisher': els.nm.value };
+    // body = 'Event ' + str + ' from publisher ' + els.nm.value;
     authStr = util.basicAuthStr(els.pub_user.value, els.pub_pw.value);
-    ps.publish(els.pub_category.value, els.pub_url.value, body, authStr);
+    ps.publishObj(els.pub_category.value, els.pub_url.value, body, authStr);
   };
 
   sub = function() {
     var authStr, subFnc;
 
     subFnc = function(data, time) {
-      append(data);
+      console.log(data);
+      append('Event ' + data.event + ' from publisher ' + data.publisher + '.');
     };
 
     if (subscribe) {
@@ -32,7 +34,7 @@
       els.status.textContent = "Inactive";
     } else {
       authStr = util.basicAuthStr(els.sub_user.value, els.sub_pw.value);
-      subscribe = ps.Subscriber(els.sub_category.value, els.sub_url.value, subFnc, authStr);
+      subscribe = ps.Subscriber(els.sub_category.value, els.sub_url.value, subFnc, authStr, { 'json': true });
       subscribe.start();
       els.sub_action.textContent = "Stop";
       els.status.textContent = "Active";
