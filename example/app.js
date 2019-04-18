@@ -1,5 +1,5 @@
-// Released under MIT license.
-// https://raw.githubusercontent.com/jung-kurt/caddy-pubsub/master/LICENSE
+// Released under MIT license. This file is part of the project at
+// https://github.com/jung-kurt/caddy-pubsub
 
 (function() {
 
@@ -14,7 +14,6 @@
     var body, authStr;
     if (els.nm.value === '') els.nm.value = 'user_' + util.randomInt(10, 100);
     body = { 'event': str, 'publisher': els.nm.value };
-    // body = 'Event ' + str + ' from publisher ' + els.nm.value;
     authStr = util.basicAuthStr(els.pub_user.value, els.pub_pw.value);
     ps.publishObj(els.pub_category.value, els.pub_url.value, body, authStr);
   };

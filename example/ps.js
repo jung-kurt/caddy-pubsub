@@ -1,5 +1,5 @@
-// Released under MIT license.
-// https://raw.githubusercontent.com/jung-kurt/caddy-pubsub/master/LICENSE
+// Released under MIT license. This file is part of the project at
+// https://github.com/jung-kurt/caddy-pubsub
 
 var ps = ps || {};
 
