@@ -220,5 +220,14 @@ events with the specified category; this text is often a JSON-encoded object
 • authorization: a string like "Basic cHVibGlzaDoxMjM=" that will be sent
 as an authorization header.
 
+A variation of the ps.publish() function is
+
+	ps.publishObj(category, url, body, authorization);
+
+In this case, body can be any JSON-encodable value such as an array or an
+object. When subscribing to events that are published this way, it is
+convenient to set the "json" field of the options argument of ps.Subscriber()
+to true so that the event body is automatically decoded.
+
 */
 package pubsub
