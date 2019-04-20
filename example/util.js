@@ -3,6 +3,19 @@
 
 var util = util || {};
 
+// For c = 'A' through 'Y', return the successor character as a string. For all
+// other values, return 'A' as a string.
+util.nextChar = function(c) {
+  if (c.length === 0) c = 65;
+  else {
+    c = c.charCodeAt(0);
+    if (c < 65) c = 65;
+    else c += 1;
+    if (c > 90) c = 65;
+  }
+  return String.fromCharCode(c);
+};
+
 // Return object that associates, for each DOM element that has at least one of
 // the attributes passed as an argument, the value of the attribute and the
 // element itself. For example, els = util.DomElements('id', 'data-click').

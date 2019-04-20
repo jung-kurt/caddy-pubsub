@@ -14,11 +14,11 @@ Package pubsub implements a longpoll-based publish and subscribe middleware for
 
 ~rgc~
 This plugin lets you easily push event notifications to any practical number of
-web clients. To publish an event, content that includes a category and body is
-posted to the "publish" URL configured in the Caddyfile. To subscribe to
-published events, a web client simply connects to the "subscribe" URL
-configured in the Caddyfile. This connection can be managed by including the
-small, dependency-free file ps.js in your web application and using the
+web clients. To publish an event, post content that includes a category and
+body to the "publish" URL configured in the Caddyfile. To subscribe to
+published events, simply connect your web client to the "subscribe" URL
+configured in the Caddyfile. To manage the subscription connection, include the
+small, dependency-free file ps.js in your web application and use the
 non-blocking methods of a Subscriber instance.
 
 This plugin uses longpolling (specifically, [golongpoll][longpoll]) to connect

@@ -3,12 +3,14 @@
 
 (function() {
 
-  var sub, pub, subscribe, status, append, els, mode;
+  var auto, autocycle, autoc, sub, pub, subscribe, status, append, els, mode;
 
   subscribe = null;
   els = util.domElements('id', 'data-click');
   append = util.append(els.list, 'li', 10);
   mode = "run";
+  auto = false;
+  autoc = 'A';
 
   pub = function(str) {
     var body, authStr;
@@ -41,6 +43,30 @@
 
   };
 
+  (function() {
+    var cycle;
+
+    cycle = function() {
+      if (auto) {
+        pub(autoc);
+        autoc = util.nextChar(autoc);
+        window.setTimeout(cycle, util.randomInt(2, 5) * 1000);
+      }
+    };
+
+    autocycle = function() {
+      if (auto) {
+        els.auto.textContent = 'Auto start';
+        auto = false;
+      } else {
+        els.auto.textContent = 'Auto stop';
+        auto = true;
+        cycle();
+      }
+    };
+
+  })();
+
   util.click(function(val) {
     switch (val) {
       case "pub-a":
@@ -54,6 +80,9 @@
         break;
       case "sub_action":
         sub();
+        break;
+      case "auto":
+        autocycle();
         break;
       case "mode":
         if (mode === "run") {
