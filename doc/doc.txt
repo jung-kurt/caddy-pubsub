@@ -9,7 +9,7 @@
 [![Report][badge-report]][report]
 
 ~rg~
-Package pubsub implements a longpoll-based publish and subscribe middleware for 
+Package pubsub implements a longpoll-based publish and subscribe middleware for
 [Caddy][caddy], a modern, full-featured, easy-to-use web server.
 
 ~rgc~
@@ -50,7 +50,7 @@ server and all connected clients.
 ~rgc~
 > **Longpolling consumes resources on the server.** Too many connections to
 > clients can impact server operations. It is important to protect the
-> configured "subscribe" path with some form of authentication such as 
+> configured "subscribe" path with some form of authentication such as
 > [basic authentication][auth] or [JWT][jwt] in order to manage the number of
 > connections that your system will maintain. Be sure to use HTTPS!
 
@@ -93,12 +93,12 @@ then dispatched verbatim to all clients that are currently subscribed to the
 specified category. Structured data is easily dispatched by sending a
 JSON-encoded value.
 
-At its simplest, a publish call might look like 
+At its simplest, a publish call might look like
 
 	https://example.com/chat/publish?category=team&body=Hello%20world
 
 In this example, the body "Hello world" is dispatched to all subscribers of the
-"team" category. 
+"team" category.
 
 ### Subscribing
 
@@ -224,11 +224,11 @@ server timestamp) for each event of the specified category
 * **authorization**: a string like "Basic c3Vic2NyaWJlOjEyMw==" that will be
 sent as an authorization header.
 
-* **options**: an object that contains the fields 
+* **options**: an object that contains the fields
 **timeout** (seconds, default 45),
-**successDelay** (milliseconds, default 10), 
-**errorDelay** (milliseconds, default 3000), and 
-**json** (boolean, true if event bodies are JSON-encoded and 
+**successDelay** (milliseconds, default 10),
+**errorDelay** (milliseconds, default 3000), and
+**json** (boolean, true if event bodies are JSON-encoded and
 should be automatically decoded, default false).
 
 More details can be found in the comments in the ps.js file.
