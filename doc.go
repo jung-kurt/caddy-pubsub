@@ -163,10 +163,12 @@ field or leave it empty. A blank value will be replaced with a random name like
 
 • On each open page, click the "Run" button and then the "Start" button.
 Simulate the publication of events by clicking the "A", "B", and "C" buttons
-from various devices or tab pages. These events will be sent to the web server
-and dispatched to all subscribing pages. These events will be displayed beneath
-the buttons in a list. A page can publish events even if it does not subscribe
-to them.
+from various devices or tab pages. Additionally, you may click the "Auto start"
+button. This will begin an automatic sequence in which an event is published at
+random intervals. Published events will be sent to the web server and
+dispatched to all subscribing pages. These events will be displayed beneath the
+buttons in a list. A page can publish events even if it does not subscribe to
+them.
 
 Using pubsub in your own web applications
 
