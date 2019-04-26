@@ -106,8 +106,6 @@ var ps = ps || {};
     success = function(data) {
       var ok;
 
-      console.log('ajax success');
-
       ok = false;
       if (data) {
         data = jsonDecode(data);
@@ -132,7 +130,6 @@ var ps = ps || {};
     };
 
     err = function(code) {
-      console.log('ajax error', code);
       cycle(false);
     };
 
