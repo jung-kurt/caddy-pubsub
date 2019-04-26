@@ -17,3 +17,7 @@ doc/index.html
 doc/pubsub.md
 coverage*
 example/*.ok
+*0
+*1
+*2
+*3

@@ -19,9 +19,7 @@ package pubsub
 import (
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
-	"os"
 	"strconv"
 
 	"github.com/jcuga/golongpoll"
@@ -66,21 +64,14 @@ func init() {
 func configureServer(ctrl *caddy.Controller, cfg *httpserver.SiteConfig) (err error) {
 	var hnd handlerType
 
-	hnd.startup = func() (err error) {
-		log.Print("startup")
-		return
-	}
-
 	hnd.shutdown = func() (err error) {
 		for j := 0; j < len(hnd.rules) && err == nil; j++ {
 			rule := &hnd.rules[j]
 			if rule.manager != nil {
-				log.Printf("longpoll %d shutdown\n", j)
 				rule.manager.Shutdown()
 				rule.manager = nil
 			}
 		}
-		log.Print("shutdown")
 		return
 	}
 
@@ -91,8 +82,6 @@ func configureServer(ctrl *caddy.Controller, cfg *httpserver.SiteConfig) (err er
 			rule.manager, err = golongpoll.StartLongpoll(rule.opt)
 		}
 		if err == nil {
-			log.SetOutput(os.Stdout)
-			ctrl.OnStartup(hnd.startup)
 			ctrl.OnShutdown(hnd.shutdown)
 			cfg.AddMiddleware(func(next httpserver.Handler) httpserver.Handler {
 				hnd.next = next
@@ -115,7 +104,6 @@ func pubsubParse(c *caddy.Controller) (rules []ruleType, err error) {
 		var rule ruleType
 		val := c.Val()
 		args := c.RemainingArgs()
-		// printf("Line %2d: [%s] [%s]\n", c.Line(), val, join(args, ", "))
 		if val == "pubsub" {
 			switch {
 			case len(args) == 2:
@@ -127,14 +115,8 @@ func pubsubParse(c *caddy.Controller) (rules []ruleType, err error) {
 						args = c.RemainingArgs()
 						argCount := len(args)
 						switch val {
-						// If this flag is true, golongpoll logs messages to the global log
-						// instance which interferes with caddy's logging mechanism.
-						// case "LoggingEnabled":
-						// 	if argCount == 0 {
-						// 		rule.opt.LoggingEnabled = true
-						// 	} else {
-						// 		err = fmt.Errorf("unexpected arguments after \"LoggingEnabled\"")
-						// 	}
+						// If the "LoggingEnabled" flag is true, golongpoll logs messages to the
+						// global log instance which interferes with caddy's logging mechanism.
 						case "MaxLongpollTimeoutSeconds":
 							if argCount == 1 {
 								rule.opt.MaxLongpollTimeoutSeconds, err = strconv.Atoi(args[0])
@@ -189,15 +171,11 @@ func (h handlerType) ServeHTTP(w http.ResponseWriter, r *http.Request) (code int
 		} else if httpserver.Path(r.URL.Path).Matches(rule.publishPath) {
 			err = r.ParseForm()
 			if err == nil {
-				// log.Printf("form: %+v", r.Form)
 				category := r.Form.Get("category")
 				if category != "" {
 					body := r.Form.Get("body")
 					if body != "" {
 						err = rule.manager.Publish(category, body)
-						if err == nil {
-							log.Printf("published %s / %s", category, body)
-						}
 					} else {
 						err = errNoBody
 					}

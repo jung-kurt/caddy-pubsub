@@ -170,7 +170,6 @@ func TestServe(t *testing.T) {
 			}))
 			// In production, Caddy calls a middleware's startup and shutdown functions
 			// appropriately, but not in a test. Call them here manually to remedy that.
-			hnd.startup()
 			for reqJ := 0; reqJ < len(requestList) && err == nil; reqJ++ {
 				var res *http.Response
 				res, err = http.Get(srv.URL + requestList[reqJ])
