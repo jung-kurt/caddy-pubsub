@@ -55,13 +55,12 @@
     };
 
     autocycle = function() {
+      auto = !auto;
       if (auto) {
-        els.auto.textContent = 'Auto start';
-        auto = false;
-      } else {
         els.auto.textContent = 'Auto stop';
-        auto = true;
         cycle();
+      } else {
+        els.auto.textContent = 'Auto start';
       }
     };
 
