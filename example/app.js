@@ -3,7 +3,7 @@
 
 (function() {
 
-  var auto, autocycle, autoc, sub, pub, subscribe, status, append, els, mode;
+  var auto, autocycle, autoc, sub, pub, subscribe, append, els, mode;
 
   subscribe = null;
   els = util.domElements('id', 'data-click');
