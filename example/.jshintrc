@@ -1,19 +1,19 @@
 {
-	"esversion": 3,
-		"eqeqeq": true,
-		"freeze": true,
-		"latedef": true,
-		"undef": true,
-		"unused": "vars",
-		"shadow": "outer",
-		"strict": "implied",
-		"globals": {
-			"console": true,
-			"document": true,
-			"JSON": true,
-			"ps": true,
-			"util": true,
-			"window": true,
-			"XMLHttpRequest": true
-		}
+  "esversion": 3,
+  "eqeqeq": true,
+  "freeze": true,
+  "latedef": true,
+  "undef": true,
+  "unused": "vars",
+  "shadow": "outer",
+  "strict": "implied",
+  "globals": {
+    "console": true,
+    "document": true,
+    "JSON": true,
+    "ps": true,
+    "util": true,
+    "window": true,
+    "XMLHttpRequest": true
+  }
 }
