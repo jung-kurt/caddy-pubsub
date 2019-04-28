@@ -6,3 +6,12 @@ git commit -am "Commit message here"
 git tag
 git tag v2.x.y
 git push --tags -u origin master
+
+Discard all local changes to all files permanently
+-------------------------------------------------
+git reset --hard
+
+Delete local tag 12345
+----------------------
+git push --delete origin 12345
+git tag -d 12345
