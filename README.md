@@ -257,7 +257,7 @@ ps.publishObj(category, url, body, authorization);
 
 In this case, body can be any JSON-encodable value such as an array or an
 object. When subscribing to events that are published this way, it is
-convenient to set the "json" field of the options argument of ps.Subscriber()
+convenient to set the "json" field of the options argument of `ps.Subscriber()`
 to true so that the event body is automatically decoded.
 
 [auth]: https://caddyserver.com/docs/basicauth
