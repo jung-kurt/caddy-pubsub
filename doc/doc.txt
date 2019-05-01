@@ -8,7 +8,7 @@
 [![MIT licensed][badge-mit]][license]
 [![Report][badge-report]][report]
 
-~rg~
+~rgc~
 Package pubsub implements a longpoll-based publish and subscribe middleware for
 [Caddy][caddy], a modern, full-featured, easy-to-use web server.
 
