@@ -1,21 +1,17 @@
-all : documentation lint
+all : ok documentation lint
 
 documentation : doc/index.html doc.go README.md 
 
-lint : example/ps.js.ok example/app.js.ok example/util.js.ok example/index.html.ok
+lint : ok/ps.js ok/app.js ok/util.js ok/index.html
 
-%.js.ok : %.js
+ok : 
+	mkdir ok
+
+ok/%.js : example/%.js
 	jshint $<
 	touch $@
 
-build :
-	cd ../caddy-custom
-	go build -v
-	sudo setcap cap_net_bind_service=+ep ./caddy
-	./caddy -plugins | grep pubsub
-	./caddy -version
-
-%.html.ok : %.html
+ok/%.html : doc/%.html
 	tidy -quiet -output /dev/null $<
 	touch $@
 
@@ -42,5 +38,12 @@ perm :
 	chgrp -R caddy example
 	chmod -R u=rwX,g=rX,o= example
 
+build :
+	cd ../caddy-custom
+	go build -v
+	sudo setcap cap_net_bind_service=+ep ./caddy
+	./caddy -plugins | grep pubsub
+	./caddy -version
+
 clean :
-	rm -f coverage.html coverage doc/*.ok example/*.ok doc/index.html doc.go README.md
+	rm -f coverage.html coverage ok/* doc/index.html doc.go README.md
