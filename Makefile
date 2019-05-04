@@ -1,33 +1,46 @@
-all : doc example/ps.js.ok example/app.js.ok example/util.js.ok example/index.html.ok
+all : documentation lint
 
-cov : all
-	go test -v -coverprofile=coverage && go tool cover -html=coverage -o=coverage.html
+documentation : doc/index.html doc.go README.md 
+
+lint : example/ps.js.ok example/app.js.ok example/util.js.ok example/index.html.ok
 
 %.js.ok : %.js
 	jshint $<
 	touch $@
 
+build :
+	cd ../caddy-custom
+	go build -v
+	sudo setcap cap_net_bind_service=+ep ./caddy
+	./caddy -plugins | grep pubsub
+	./caddy -version
+
 %.html.ok : %.html
 	tidy -quiet -output /dev/null $<
 	touch $@
 
-doc : README.md doc.go doc/index.html.ok
+cov : all
+	go test -v -coverprofile=coverage && go tool cover -html=coverage -o=coverage.html
 
-README.md doc.go doc/index.html : doc/doc.txt
+check :
+	golint .
+	go vet -all .
+	gofmt -s -l .
 
-doc/pubsub.md README.md doc.go : doc/doc.txt
-	cd doc; lua doc.lua
-	gofmt -s -w doc.go
+README.md : doc/document.md
+	pandoc --read=markdown --write=gfm < $< > $@
 
-doc/index.html : doc/hdr.html doc/body.html doc/ftr.html
-	cat doc/hdr.html doc/body.html doc/ftr.html > $@
+doc/index.html : doc/document.md doc/html.txt doc/caddy.xml
+	pandoc --read=markdown --write=html --template=doc/html.txt \
+		--metadata pagetitle="Pubsub for Caddy" --syntax-definition=doc/caddy.xml < $< > $@
 
-doc/body.html : doc/pubsub.md
-	markdown -f +links,+image,+smarty,+ext,+divquote -o $@ $<
+doc.go : doc/document.md doc/cleandoc.awk
+	pandoc --read=markdown --write=plain $< | awk -f doc/cleandoc.awk > $@
+	gofmt -s -w $@
 
 perm :
 	chgrp -R caddy example
 	chmod -R u=rwX,g=rX,o= example
 
 clean :
-	rm -f coverage.html coverage doc/*.ok example/*.ok doc/pubsub.md README.md doc.go doc/index.html doc/body.html
+	rm -f coverage.html coverage doc/*.ok example/*.ok doc/index.html doc.go README.md

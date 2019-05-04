@@ -1,18 +1,11 @@
-~rc~
 # Pubsub for Caddy
 
-~c~
-[![Git Hub repository][badge-github]][github]
-[![Kurt Jung][badge-author]][jung]
-~rc~
 [![MIT licensed][badge-mit]][license]
 [![Report][badge-report]][report]
 
-~rgc~
 Package pubsub implements a longpoll-based publish and subscribe middleware for
 [Caddy][caddy], a modern, full-featured, easy-to-use web server.
 
-~rgc~
 This plugin lets you easily push event notifications to any practical number of
 web clients. To publish an event, post content that includes a category and
 body to the "publish" URL configured in the Caddyfile. To subscribe to
@@ -45,22 +38,20 @@ publish its own response.
 As with websockets, longpolling requires special care to protect both the
 server and all connected clients.
 
-~c~
-> %warning%
-~rgc~
-> **Longpolling consumes resources on the server.** Too many connections to
-> clients can impact server operations. It is important to protect the
-> configured "subscribe" path with some form of authentication such as
-> [basic authentication][auth] or [JWT][jwt] in order to manage the number of
-> connections that your system will maintain. Be sure to use HTTPS!
+::: warning
+**Longpolling consumes resources on the server.** Too many
+connections to clients can impact server operations. It is important to
+protect the configured "subscribe" path with some form of authentication such
+as [basic authentication][auth] or [JWT][jwt] in order to manage the number of
+connections that your system will maintain. Be sure to use HTTPS!
+:::
 
-~c~
-> %warning%
-~rgc~
-> **Published events can instantly reach a large number of clients.** Be sure
-> to require authorization in order to access the configured "publish" path to
-> prevent rogue publishers from dispatching unexpected content to clients or
-> flooding the subscription channels.
+::: {.warning}
+**Published events can instantly reach a large number of
+clients.** Be sure to require authorization in order to access the configured
+"publish" path to prevent rogue publishers from dispatching unexpected content
+to clients or flooding the subscription channels.
+:::
 
 ## Basic Syntax
 
@@ -69,16 +60,13 @@ corresponding "subscribe" path. This directive can be repeated. Each pubsub
 block is managed by its own longpoll instance so categories are effectively
 scoped by directive.
 
-~c~
-> %syntax%
-> [pubsub][key] [publish_path][subkey] [subscribe_path][subkey]
-~rg~
-	pubsub publish_path subscribe_path
-~rgc~
+```caddy
+pubsub publish_path subscribe_path
+```
 
 For example:
 
-```ini
+```caddy
 pubsub /chat/publish /chat/subscribe
 ```
 
@@ -120,44 +108,37 @@ The basic syntax shown above is likely all you will need to configure the
 pubsub plugin. If some control over the underlying golongpoll package is
 needed, you can use all or part of the advanced syntax shown here.
 
-~c~
-> %syntax%
-> [pubsub][key] [publish_path][subkey] [subscribe_path][subkey] {
->  [MaxLongpollTimeoutSeconds][key] [timeout][subkey]
->  [MaxEventBufferSize][key] [count][subkey]
->  [EventTimeToLiveSeconds][key] [timeout][subkey]
->  [DeleteEventAfterFirstRetrieval][key]
+```caddy
+pubsub publish_path subscribe_path {
+	MaxLongpollTimeoutSeconds timeout
+	MaxEventBufferSize count
+	EventTimeToLiveSeconds timeout
+	DeleteEventAfterFirstRetrieval
 }
-~rg~
-	pubsub publish_path subscribe_path {
-		MaxLongpollTimeoutSeconds timeout
-		MaxEventBufferSize count
-		EventTimeToLiveSeconds timeout
-		DeleteEventAfterFirstRetrieval
-	}
-~rgc~
+```
 
 Any missing fields are replaced with their default values; see the
 [golongpoll documentation][golongpoll-doc] for more details.
 
-The `MaxLongpollTimeoutSeconds` subdirective specifies the maximum number of
-seconds that the longpoll server will keep a client connection alive.
+The [MaxLongpollTimeoutSeconds]{.key} subdirective specifies the maximum number
+of seconds that the longpoll server will keep a client connection alive.
 
-The `MaxEventBufferSize` subdirective specifies the maximum number of events of
-a particular category that will be kept by the longpoll server. Beyond this
-limit, events will be dropped even if they have not expired.
+The [MaxEventBufferSize]{.key} subdirective specifies the maximum number of
+events of a particular category that will be kept by the longpoll server.
+Beyond this limit, events will be dropped even if they have not expired.
 
-The `EventTimeToLiveSeconds` subdirective specifies how long events will be
-retained by the longpoll server.
+The [EventTimeToLiveSeconds]{.key} subdirective specifies how long events will
+be retained by the longpoll server.
 
-If the `DeleteEventAfterFirstRetrieval` subdirective is present then events
-will be deleted right after they have been dispatched to current subscribers.
+If the [DeleteEventAfterFirstRetrieval]{.key} subdirective is present then
+events will be deleted right after they have been dispatched to current
+subscribers.
 
 ## Running the example
 
 Here is a sample Caddyfile that can be modified for use in the following example:
 
-```ini
+```caddy
 http://127.0.0.1 {
 	bind 127.0.0.1
 	basicauth /psdemo/publish publish 123
@@ -224,23 +205,23 @@ subscribe = ps.Subscriber(category, url, callback, authorization, options);
 
 The parameters are:
 
-* **category**: a short string that identifies the event category to which to
+* [category]{.key}: a short string that identifies the event category to which to
 subscribe
 
-* **url**: the subscribe_path configured in the Caddyfile (in the example above,
+* [url]{.key}: the subscribe_path configured in the Caddyfile (in the example above,
 this is "/psdemo/subscribe")
 
-* **callback**: this is a function that is called (with the published body and
+* [callback]{.key}: this is a function that is called (with the published body and
 server timestamp) for each event of the specified category
 
-* **authorization**: a string like "Basic c3Vic2NyaWJlOjEyMw==" that will be
+* [authorization]{.key}: a string like "Basic c3Vic2NyaWJlOjEyMw==" that will be
 sent as an authorization header.
 
-* **options**: an object that contains the fields
-**timeout** (seconds, default 45),
-**successDelay** (milliseconds, default 10),
-**errorDelay** (milliseconds, default 3000), and
-**json** (boolean, true if event bodies are JSON-encoded and
+* [options]{.key}: an object that contains the fields
+[timeout]{.key} (seconds, default 45),
+[successDelay]{.key} (milliseconds, default 10),
+[errorDelay]{.key} (milliseconds, default 3000), and
+[json]{.key} (boolean, true if event bodies are JSON-encoded and
 should be automatically decoded, default false).
 
 More details can be found in the comments in the ps.js file.
@@ -265,16 +246,16 @@ ps.publish(category, url, body, authorization);
 
 The parameters are:
 
-* **category**: a short string that identifies the event category of the
+* [category]{.key}: a short string that identifies the event category of the
 published event
 
-* **url**: the publish_path configured in the Caddyfile (in the example above,
+* [url]{.key}: the publish_path configured in the Caddyfile (in the example above,
 this is "/psdemo/publish")
 
-* **body**: this is the text that will be dispatched to all subscribers of
+* [body]{.key}: this is the text that will be dispatched to all subscribers of
 events with the specified category; this text is often a JSON-encoded object
 
-* **authorization**: a string like "Basic cHVibGlzaDoxMjM=" that will be sent
+* [authorization]{.key}: a string like "Basic cHVibGlzaDoxMjM=" that will be sent
 as an authorization header.
 
 A variation of the `ps.publish()` function is
@@ -288,7 +269,6 @@ object. When subscribing to events that are published this way, it is
 convenient to set the "json" field of the options argument of `ps.Subscriber()`
 to true so that the event body is automatically decoded.
 
-~cr~
 [auth]: https://caddyserver.com/docs/basicauth
 [badge-author]: https://img.shields.io/badge/author-Kurt_Jung-blue.svg
 [badge-github]: https://img.shields.io/badge/project-Git_Hub-blue.svg
@@ -300,8 +280,6 @@ to true so that the event body is automatically decoded.
 [golongpoll-doc]: https://godoc.org/github.com/jcuga/golongpoll
 [jung]: https://github.com/jung-kurt/
 [jwt]: https://github.com/BTBurke/caddy-jwt
-[key]: class:key
 [license]: https://raw.githubusercontent.com/jung-kurt/caddy-pubsub/master/LICENSE
 [longpoll]: https://github.com/jcuga/golongpoll
 [report]: https://goreportcard.com/report/github.com/jung-kurt/caddy-pubsub
-[subkey]: class:subkey

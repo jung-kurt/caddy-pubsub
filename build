@@ -1,5 +1,0 @@
-cd ../caddy-custom
-go build -v
-sudo setcap cap_net_bind_service=+ep ./caddy
-./caddy -plugins | grep pubsub
-./caddy -version
