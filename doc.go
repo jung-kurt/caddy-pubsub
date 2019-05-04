@@ -14,8 +14,11 @@ This plugin uses longpolling (specifically, golongpoll) to connect
 clients to the server. The advantages of this are significant. Longpoll
 connections
 
+
 -   are straightforward HTTP/HTTPS
+
 -   are not thwarted by firewalls and proxies
+
 -   are supported by virtually all browsers
 
 Additionally, this plugin provides a simple web-based interface to
@@ -140,10 +143,13 @@ example:
         pubsub /psdemo/publish /psdemo/subscribe
     }
 
+
 -   Obtain or build a Caddy web server with the pubsub plugin.
+
 
 -   Create an example directory and download the files in the repository
 example directory to it. Make this your default working directory.
+
 
 -   Edit the file named Caddyfile. Modify the site address to an
 appropriate local network address. Ideally, you will use an address
@@ -157,14 +163,17 @@ PRODUCTION. The Caddyfile has values for the authorization fields
 and paths that are used as defaults in the example script, so
 leaving them as they are will simplify the demonstration.
 
+
 -   Launch the Caddy web server from the directory that contains your
 example Caddyfile. The command might be simply caddy or, if the
 caddy executable you wish to run is not on the default search path,
 you will need to qualify the name with its location.
 
+
 -   Access the server with the web browsers of a number of devices.
 Alternatively, open a number of tabs in a single browser and point
 them to the server.
+
 
 -   On each open page, click the “Configure” button and make appropriate
 changes. Most fields, such as “Auth password” and “URL” are
@@ -172,6 +181,7 @@ pre-filled to match the values in the sample Caddyfile. You may
 enter a name in the “Publisher name” field or leave it empty. A
 blank value will be replaced with a random name like “user_42” the
 first time you publish an event.
+
 
 -   On each open page, click the “Run” button and then the “Start”
 button. Simulate the publication of events by clicking the “A”, “B”,
@@ -199,17 +209,22 @@ as follows:
 
 The parameters are:
 
+
 -   category: a short string that identifies the event category to which
 to subscribe
+
 
 -   url: the subscribe_path configured in the Caddyfile (in the example
 above, this is “/psdemo/subscribe”)
 
+
 -   callback: this is a function that is called (with the published body
 and server timestamp) for each event of the specified category
 
+
 -   authorization: a string like “Basic c3Vic2NyaWJlOjEyMw==” that will
 be sent as an authorization header.
+
 
 -   options: an object that contains the fields timeout (seconds,
 default 45), successDelay (milliseconds, default 10), errorDelay
@@ -233,15 +248,19 @@ Publish an event as follows:
 
 The parameters are:
 
+
 -   category: a short string that identifies the event category of the
 published event
+
 
 -   url: the publish_path configured in the Caddyfile (in the example
 above, this is “/psdemo/publish”)
 
+
 -   body: this is the text that will be dispatched to all subscribers of
 events with the specified category; this text is often a
 JSON-encoded object
+
 
 -   authorization: a string like “Basic cHVibGlzaDoxMjM=” that will be
 sent as an authorization header.

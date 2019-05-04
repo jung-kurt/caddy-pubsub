@@ -3,7 +3,10 @@ BEGIN {
 	print "/*" 
 }
 
-/^\-/ { trim = 1 }
+/^\-/ { 
+	trim = 1 
+	print ""
+}
 
 /^Package/ { show = 1 }
 
@@ -13,7 +16,4 @@ trim { sub("^ +", "", $0) }
 
 show { print $0 }
 
-# NR == 1, /^Package/ { print $0 }
-
 END { print "*/\npackage pubsub" }
-
