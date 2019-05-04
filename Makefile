@@ -34,8 +34,8 @@ doc/index.html : doc/document.md doc/html.txt doc/caddy.xml
 	pandoc --read=markdown --write=html --template=doc/html.txt \
 		--metadata pagetitle="Pubsub for Caddy" --syntax-definition=doc/caddy.xml < $< > $@
 
-doc.go : doc/document.md doc/cleandoc.awk
-	pandoc --read=markdown --write=plain $< | awk -f doc/cleandoc.awk > $@
+doc.go : doc/document.md doc/go.awk
+	pandoc --read=markdown --write=plain $< | awk -f doc/go.awk > $@
 	gofmt -s -w $@
 
 perm :
