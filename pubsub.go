@@ -99,6 +99,46 @@ func setup(c *caddy.Controller) (err error) {
 }
 
 // pubsubParse parses one or more "pubsub" configuration directives
+func pubsubParseAdvanced(c *caddy.Controller, opt *golongpoll.Options) (err error) {
+	for err == nil && c.NextBlock() {
+		val := c.Val()
+		args := c.RemainingArgs()
+		argCount := len(args)
+		switch val {
+		// If the "LoggingEnabled" flag is true, golongpoll logs messages to the
+		// global log instance which interferes with caddy's logging mechanism.
+		case "MaxLongpollTimeoutSeconds":
+			if argCount == 1 {
+				opt.MaxLongpollTimeoutSeconds, err = strconv.Atoi(args[0])
+			} else {
+				err = fmt.Errorf("expecting 1 argument after \"MaxLongpollTimeoutSeconds\", got %d", argCount)
+			}
+		case "MaxEventBufferSize":
+			if argCount == 1 {
+				opt.MaxEventBufferSize, err = strconv.Atoi(args[0])
+			} else {
+				err = fmt.Errorf("expecting 1 argument after \"MaxEventBufferSize\", got %d", argCount)
+			}
+		case "EventTimeToLiveSeconds":
+			if argCount == 1 {
+				opt.EventTimeToLiveSeconds, err = strconv.Atoi(args[0])
+			} else {
+				err = fmt.Errorf("expecting 1 argument after \"EventTimeToLiveSeconds\", got %d", argCount)
+			}
+		case "DeleteEventAfterFirstRetrieval":
+			if argCount == 0 {
+				opt.DeleteEventAfterFirstRetrieval = true
+			} else {
+				err = fmt.Errorf("unexpected arguments after \"DeleteEventAfterFirstRetrieval\"")
+			}
+		default:
+			err = fmt.Errorf("unexpected subdirective \"%s\"", val)
+		}
+	}
+	return
+}
+
+// pubsubParse parses one or more "pubsub" configuration directives
 func pubsubParse(c *caddy.Controller) (rules []ruleType, err error) {
 	for err == nil && c.Next() {
 		var rule ruleType
@@ -110,41 +150,7 @@ func pubsubParse(c *caddy.Controller) (rules []ruleType, err error) {
 				if args[0] != args[1] {
 					rule.publishPath = args[0]
 					rule.subscribePath = args[1]
-					for err == nil && c.NextBlock() {
-						val = c.Val()
-						args = c.RemainingArgs()
-						argCount := len(args)
-						switch val {
-						// If the "LoggingEnabled" flag is true, golongpoll logs messages to the
-						// global log instance which interferes with caddy's logging mechanism.
-						case "MaxLongpollTimeoutSeconds":
-							if argCount == 1 {
-								rule.opt.MaxLongpollTimeoutSeconds, err = strconv.Atoi(args[0])
-							} else {
-								err = fmt.Errorf("expecting 1 argument after \"MaxLongpollTimeoutSeconds\", got %d", argCount)
-							}
-						case "MaxEventBufferSize":
-							if argCount == 1 {
-								rule.opt.MaxEventBufferSize, err = strconv.Atoi(args[0])
-							} else {
-								err = fmt.Errorf("expecting 1 argument after \"MaxEventBufferSize\", got %d", argCount)
-							}
-						case "EventTimeToLiveSeconds":
-							if argCount == 1 {
-								rule.opt.EventTimeToLiveSeconds, err = strconv.Atoi(args[0])
-							} else {
-								err = fmt.Errorf("expecting 1 argument after \"EventTimeToLiveSeconds\", got %d", argCount)
-							}
-						case "DeleteEventAfterFirstRetrieval":
-							if argCount == 0 {
-								rule.opt.DeleteEventAfterFirstRetrieval = true
-							} else {
-								err = fmt.Errorf("unexpected arguments after \"DeleteEventAfterFirstRetrieval\"")
-							}
-						default:
-							err = fmt.Errorf("unexpected subdirective \"%s\"", val)
-						}
-					}
+					err = pubsubParseAdvanced(c, &rule.opt)
 				} else {
 					err = fmt.Errorf("publish path and subscribe path must be different")
 				}
