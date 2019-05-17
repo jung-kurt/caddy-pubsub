@@ -46,7 +46,7 @@ as [basic authentication][auth] or [JWT][jwt] in order to manage the number of
 connections that your system will maintain. Be sure to use HTTPS!
 :::
 
-::: {.warning}
+::: warning
 **Published events can instantly reach a large number of
 clients.** Be sure to require authorization in order to access the configured
 "publish" path to prevent rogue publishers from dispatching unexpected content
