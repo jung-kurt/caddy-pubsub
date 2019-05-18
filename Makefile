@@ -32,7 +32,7 @@ doc/index.html : doc/document.md doc/html.txt doc/caddy.xml
 		--metadata pagetitle="Pubsub for Caddy" --syntax-definition=doc/caddy.xml < $< > $@
 
 doc.go : doc/document.md doc/go.awk
-	pandoc --read=markdown --write=plain $< | awk -f doc/go.awk > $@
+	pandoc --read=markdown --write=plain $< | awk --assign=package_name=pubsub --file=doc/go.awk > $@
 	gofmt -s -w $@
 
 perm :
