@@ -22,9 +22,9 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/caddyserver/caddy"
+	"github.com/caddyserver/caddy/caddyhttp/httpserver"
 	"github.com/jcuga/golongpoll"
-	"github.com/mholt/caddy"
-	"github.com/mholt/caddy/caddyhttp/httpserver"
 )
 
 type handlerType struct {

@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/mholt/caddy"
-	"github.com/mholt/caddy/caddyhttp/httpserver"
+	"github.com/caddyserver/caddy"
+	"github.com/caddyserver/caddy/caddyhttp/httpserver"
 )
 
 func configure(expectErr bool, str string) (rules []ruleType, err error) {
